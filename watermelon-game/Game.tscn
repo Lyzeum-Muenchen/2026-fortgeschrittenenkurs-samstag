@@ -1,5 +1,8 @@
 [gd_scene format=3 uid="uid://beedydhd0hp6f"]
 
+[ext_resource type="PackedScene" uid="uid://tbg0yhrafkqq" path="res://Ball.tscn" id="1_wbfu4"]
+[ext_resource type="Script" uid="uid://dr30tye6s7us7" path="res://game.gd" id="1_xkndl"]
+
 [sub_resource type="Gradient" id="Gradient_6ubv3"]
 offsets = PackedFloat32Array(1)
 colors = PackedColorArray(1, 1, 0.17254902, 1)
@@ -10,21 +13,15 @@ gradient = SubResource("Gradient_6ubv3")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m2ctd"]
 size = Vector2(505, 24)
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_utmpi"]
-bounce = 0.25
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_utmpi"]
+size = Vector2(36, 435)
 
-[sub_resource type="Gradient" id="Gradient_wbfu4"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(0.22352941, 1, 0.1882353, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_m2ctd"]
-gradient = SubResource("Gradient_wbfu4")
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tg3de"]
-size = Vector2(135, 53)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xutu1"]
+size = Vector2(28.5, 432)
 
 [node name="Game" type="Node2D" unique_id=133891653]
 position = Vector2(5, -4)
+script = ExtResource("1_xkndl")
 
 [node name="Background" type="Sprite2D" parent="." unique_id=293640495]
 position = Vector2(705, 372)
@@ -40,15 +37,13 @@ points = PackedVector2Array(0, 100, 400, 300, 400, 720, 880, 720, 880, 300, 1280
 position = Vector2(639.5, 724)
 shape = SubResource("RectangleShape2D_m2ctd")
 
-[node name="Block" type="RigidBody2D" parent="." unique_id=207180903]
-position = Vector2(-3, 2)
-physics_material_override = SubResource("PhysicsMaterial_utmpi")
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Container" unique_id=663641167]
+position = Vector2(388, 515.5)
+shape = SubResource("RectangleShape2D_utmpi")
 
-[node name="Sprite2D" type="Sprite2D" parent="Block" unique_id=1959743986]
-position = Vector2(427, 9.000001)
-scale = Vector2(0.51953125, 52.5)
-texture = SubResource("GradientTexture1D_m2ctd")
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Container" unique_id=1241151142]
+position = Vector2(889.75, 516)
+shape = SubResource("RectangleShape2D_xutu1")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Block" unique_id=1927027724]
-position = Vector2(427.5, 8.5)
-shape = SubResource("RectangleShape2D_tg3de")
+[node name="Ball" parent="." unique_id=185759462 instance=ExtResource("1_wbfu4")]
+position = Vector2(614, 201)

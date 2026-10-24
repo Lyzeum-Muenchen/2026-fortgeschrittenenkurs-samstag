@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://tbg0yhrafkqq"]
+
+[ext_resource type="Script" uid="uid://cf7e31vg3noyd" path="res://ball.gd" id="1_gk6bx"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_utmpi"]
+bounce = 0.25
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gk6bx"]
+
+[node name="Ball" type="RigidBody2D" unique_id=185759462]
+physics_material_override = SubResource("PhysicsMaterial_utmpi")
+script = ExtResource("1_gk6bx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1196756290]
+shape = SubResource("CircleShape2D_gk6bx")
