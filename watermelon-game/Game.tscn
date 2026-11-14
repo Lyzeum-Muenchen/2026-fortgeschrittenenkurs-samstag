@@ -19,6 +19,12 @@ size = Vector2(36, 435)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xutu1"]
 size = Vector2(28.5, 432)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tg3de"]
+size = Vector2(459.5702, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cc0d2"]
+size = Vector2(456.5673, 43)
+
 [node name="Game" type="Node2D" unique_id=133891653]
 position = Vector2(5, -4)
 script = ExtResource("1_xkndl")
@@ -45,5 +51,33 @@ shape = SubResource("RectangleShape2D_utmpi")
 position = Vector2(889.75, 516)
 shape = SubResource("RectangleShape2D_xutu1")
 
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Container" unique_id=1025365631]
+position = Vector2(1088, 211.99997)
+rotation = -0.46251225
+shape = SubResource("RectangleShape2D_tg3de")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="Container" unique_id=1180327645]
+position = Vector2(189.51013, 207.39601)
+rotation = 0.4537856
+shape = SubResource("RectangleShape2D_cc0d2")
+
 [node name="Ball" parent="." unique_id=185759462 instance=ExtResource("1_wbfu4")]
 position = Vector2(614, 201)
+
+[node name="ScoreLabel" type="Label" parent="." unique_id=1113783521]
+offset_left = -3.0
+offset_top = 5.0
+offset_right = 102.0
+offset_bottom = 73.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "Score: 0"
+
+[node name="HighscoreLabel" type="Label" parent="." unique_id=598887363]
+offset_left = 1088.0
+offset_top = 6.0
+offset_right = 1230.0
+offset_bottom = 40.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "Highscore: 0"
