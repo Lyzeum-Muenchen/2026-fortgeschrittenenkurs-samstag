@@ -1,8 +1,15 @@
 class_name Ball
 extends RigidBody2D
 
-@export var radius = 20
-@export var color_index = 0
+var base_radius = 20
+var radius = 20
+
+@export var color_index: int = 0:
+	set(new_value):
+		color_index = new_value
+		update_radius()
+		queue_redraw()
+		
 @onready var shape : CollisionShape2D = $CollisionShape2D
 
 const color_levels = [
@@ -25,11 +32,16 @@ func _ready() -> void:
 		shape.shape = CircleShape2D.new()
 		shape.shape.radius = radius
 	
-	set_radius(radius)
+	update_radius()
 	body_entered.connect(_on_body_entered)
 	
-func set_radius(new_radius: float) -> void:
-	radius = new_radius
+func calculate_radius(index) -> float:
+	if index == 0:
+		return base_radius
+	return calculate_radius(index - 1) * 1.3
+
+func update_radius() -> void:
+	radius = calculate_radius(color_index)
 	if shape and shape.shape is CircleShape2D:
 		shape.shape.radius = radius
 	queue_redraw()
@@ -52,7 +64,7 @@ func _merge_body(other_ball: Ball) -> void:
 	global_position =  (global_position + other_ball.global_position) / 2
 	color_index = min(color_index + 1, color_levels.size() - 1)
 	
-	set_radius(radius * 1.3)
+	update_radius()
 	linear_velocity = (linear_velocity + other_ball.linear_velocity) / 2
 	
 	other_ball.queue_free()
