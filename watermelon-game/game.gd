@@ -3,9 +3,36 @@ extends Node2D
 var ball_scene = preload("res://Ball.tscn") # Name anpassen!
 var rng = RandomNumberGenerator.new()
 var next_ball
+@onready var score_label = $ScoreLabel
+@onready var highscore_label = $HighscoreLabel
+@export var score: int = 0:
+	set(new_value):
+		score = new_value
+		score_label.text = "Score: %d" % new_value
+		if score > highscore:
+			highscore = score
+		
+var highscore: int = 0:
+	set(new_value):
+		highscore = new_value
+		highscore_label.text = "Highscore: %d" % new_value
+		save_highscore(new_value)
+		
+func load_highscore():
+	var file_path = "highscore.txt"
+	if FileAccess.file_exists(file_path):
+		var file = FileAccess.open(file_path, FileAccess.READ)
+		var content = file.get_as_text()
+		highscore = int(content)
+		
+func save_highscore(value):
+	var file_path = "highscore.txt"
+	var file = FileAccess.open(file_path, FileAccess.WRITE)
+	file.store_string(str(value))
 
 func _ready() -> void:
 	next_ball = generate_new_ball()
+	load_highscore()
 	
 func generate_new_ball() -> RigidBody2D:
 	var new_ball: RigidBody2D = ball_scene.instantiate()

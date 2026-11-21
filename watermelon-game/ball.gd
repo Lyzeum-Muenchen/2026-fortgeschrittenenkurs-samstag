@@ -60,6 +60,9 @@ func _merge_body(other_ball: Ball) -> void:
 	if not is_instance_valid(self) or not is_instance_valid(other_ball):
 		return
 	
+	var game = get_node("/root/Game")
+	game.score += 1
+	
 	# neue Position und Geschwindigkeit berechnen
 	global_position =  (global_position + other_ball.global_position) / 2
 	color_index = min(color_index + 1, color_levels.size() - 1)
