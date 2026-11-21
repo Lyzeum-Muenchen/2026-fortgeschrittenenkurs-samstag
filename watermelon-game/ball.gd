@@ -3,11 +3,22 @@ extends RigidBody2D
 
 var base_radius = 20
 @export var radius = 20
-@export var color_index: int = 0:
+@export var size_index: int = 0:
 	set(new_value):
-		color_index = new_value
+		size_index = new_value
 		update_radius()
 		queue_redraw()
+
+const TEXTURE_PATHS : Array[Texture2D] = [
+	preload("res://assets/01_cherry.png"),
+	preload("res://assets/02_strawberry.png"),
+	preload("res://assets/03_grape.png"),
+	preload("res://assets/04_apple.png"),
+	preload("res://assets/05_mandarine.png"),
+	preload("res://assets/06_peach.png"),
+	preload("res://assets/07_pumpkin.png"),
+	preload("res://assets/08_watermelon.png"),
+]
 
 @onready var shape : CollisionShape2D = $CollisionShape2D
 
@@ -35,14 +46,21 @@ func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	
 func update_radius() -> void:
-	radius = get_radius(color_index + 1)
+	radius = get_radius(size_index + 1)
 	if shape and shape.shape is CircleShape2D:
 		shape.shape.radius = radius
 	queue_redraw()
 
 func _draw() -> void:
-	var selected_color = color_levels[color_index]
-	draw_circle(Vector2.ZERO, radius, selected_color)
+	var safe_index := clampi(size_index, 0, TEXTURE_PATHS.size() - 1)
+	var tex: Texture2D = TEXTURE_PATHS[safe_index]
+	if tex == null:
+		return
+
+	# Kreisdurchmesser = radius * 2; Rect so setzen, dass der Mittelpunkt bei (0, 0) liegt
+	var diameter : float = radius * 2.0
+	var rect = Rect2(Vector2(-radius, -radius), Vector2(diameter, diameter))
+	draw_texture_rect(tex, rect, false)
 	
 func _on_body_entered(body: Node) -> void:
 	if body is Ball \
@@ -62,7 +80,7 @@ func _merge_body(other_ball: Ball) -> void:
 	update_radius()
 	# neue Position und Geschwindigkeit berechnen
 	global_position =  (global_position + other_ball.global_position) / 2
-	color_index = min(color_index + 1, color_levels.size() - 1)
+	size_index = min(size_index + 1, color_levels.size() - 1)
 	
 	linear_velocity = (linear_velocity + other_ball.linear_velocity) / 2
 	var game = get_node("/root/Game")

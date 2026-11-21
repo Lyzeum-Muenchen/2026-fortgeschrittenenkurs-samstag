@@ -65,7 +65,7 @@ func generate_new_ball(generate_smallest_ball: bool) -> RigidBody2D:
 	var random_number = rng.randi_range(0, 2)
 	if generate_smallest_ball:
 		random_number = 0
-	new_ball.color_index = random_number
+	new_ball.size_index = random_number
 	new_ball.position.x = get_viewport().get_mouse_position().x
 	new_ball.position.y = 50
 	new_ball.freeze = true
